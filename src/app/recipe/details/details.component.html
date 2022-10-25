@@ -1,0 +1,29 @@
+<p *ngIf="loading">details works!</p>
+
+<section *ngIf="recipe">
+    <mat-card>
+        <mat-card-title>{{recipe.title}}</mat-card-title>
+        <mat-card-subtitle>Difficulté: {{recipe.difficulty}} - Préparation: {{recipe.preparationTime}}mn - Cuisson: {{recipe.cookingTime}}mn  </mat-card-subtitle>
+        <img *ngIf="recipe.photos.length" mat-card-image [src]="recipe.photos[0].url">
+        <mat-card-content>
+            <mat-card-subtitle>Ingrédients</mat-card-subtitle>
+            <mat-list>
+                <mat-list-item *ngFor="let i of recipe.ingredients">
+                    {{i.quantity}} {{i.unit.label}} {{i.ingredient.name}}
+                </mat-list-item>
+            </mat-list>
+
+            <mat-card-subtitle>Etapes</mat-card-subtitle>
+            <mat-list>
+                <mat-list-item *ngFor="let s of recipe.steps">
+                    {{s.position}} {{s.text}}
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+        <div *ngIf="recipe.photos.length > 1">
+            <div *ngFor="let photo of recipe.photos; index as i">
+                <img *ngIf="i > 0" mat-card-image [src]="photo.url">
+            </div>
+        </div>
+    </mat-card>
+</section>

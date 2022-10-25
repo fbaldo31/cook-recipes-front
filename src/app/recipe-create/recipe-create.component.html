@@ -1,0 +1,107 @@
+<article class="wrapper">
+  <mat-card class="form">
+      <mat-card-title>Ajouter une recette</mat-card-title>
+  
+      <!-- Recipe -->
+      <td-dynamic-forms #recipeForm [elements]="formInputs">
+          <ng-template let-element ngFor [ngForOf]="formInputs">
+            <ng-template let-control="control" [tdDynamicFormsError]="element.name">
+              <span *ngIf="control.touched || !control.pristine">
+                <span *ngIf="control.hasError('minlength')"
+                  >Min length value: {{ element.minLength }}</span
+                >
+                <span *ngIf="control.hasError('maxlength')"
+                  >Max length value: {{ element.minLength }}</span
+                >
+              </span>
+            </ng-template>
+          </ng-template>
+      </td-dynamic-forms>
+  
+      <div>
+        <button (click)="validateIngredient()" mat-button>Ajouter un ingrédient</button>
+      </div>
+  
+      <!-- Ingredients -->
+      <td-dynamic-forms #ingredientForm [elements]="ingredientData">
+        <ng-template let-element ngFor [ngForOf]="ingredientData">
+          <ng-template let-control="control" [tdDynamicFormsError]="element.name">
+            <span *ngIf="control.touched || !control.pristine">
+              <span *ngIf="control.hasError('minlength')"
+                >Min length value: {{ element.minLength }}</span
+              >
+              <span *ngIf="control.hasError('maxlength')"
+                >Max length value: {{ element.minLength }}</span
+              >
+            </span>
+          </ng-template>
+        </ng-template>
+    </td-dynamic-forms>
+  
+    <div>
+      <button (click)="validateStep()" mat-button>Ajouter une étape</button>
+    </div>
+  
+    <!-- Steps -->
+    <td-dynamic-forms #stepForm [elements]="stepData">
+      <ng-template let-element ngFor [ngForOf]="stepData">
+        <ng-template let-control="control" [tdDynamicFormsError]="element.name">
+          <span *ngIf="control.touched || !control.pristine">
+            <span *ngIf="control.hasError('minlength')"
+              >Min length value: {{ element.minLength }}</span
+            >
+            <span *ngIf="control.hasError('maxlength')"
+              >Max length value: {{ element.minLength }}</span
+            >
+          </span>
+        </ng-template>
+      </ng-template>
+    </td-dynamic-forms>
+
+    <!-- Photo -->
+    <mat-card-subtitle>Ajoutez des photos</mat-card-subtitle>
+    <td-file-input color="primary"
+      class="push-left-sm push-right-sm"
+      #fileInput
+      (selectFile)="fileSelect($event)"
+      accept=".jpg,.JPG,.JPEG,.jpeg,.png,.PNG,.tiff,.TIFF,.tif,.TIF.svg,.SVG"
+      multiple
+    >
+      <mat-icon>image_search</mat-icon>
+      <span>Parcourir...</span>
+    </td-file-input>
+
+    <mat-card-actions>
+      <!-- Submit-->
+      <button mat-button color="primary" class="center" [disabled]="!isFormValid()" (click)="submit()">Valider</button>
+    </mat-card-actions>
+  </mat-card>
+  
+  <!-- Display -->
+  <mat-card class="result">
+    <mat-card-subtitle>Ingrédients</mat-card-subtitle>
+    <mat-list>
+      <mat-list-item *ngFor="let i of ingredients">
+        <mat-icon (click)="removeIngredient(i.name)" matListIcon>delete</mat-icon>
+        <p matLine>{{i.quantity}} {{i.unit}} de {{i.name}} </p>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-card-subtitle>Etapes</mat-card-subtitle>
+    <mat-list>
+      <mat-list-item *ngFor="let s of steps">
+        <mat-icon (click)="removeStep(s.position)" matListIcon>delete</mat-icon>
+        <h3 matLine> {{s.position}} {{s.text}} </h3>
+      </mat-list-item>
+    </mat-list>
+
+    <mat-card-subtitle>Photos</mat-card-subtitle>
+    <mat-list>
+      <mat-list-item *ngFor="let p of photos">
+        <mat-icon (click)="removePhoto(p.name)" matListIcon>delete</mat-icon>
+        <h3 matLine> {{p.name}} </h3>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</article>
+
