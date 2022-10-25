@@ -17,9 +17,9 @@
 
 
     <mat-list *ngIf="recipes.length">
-      <mat-list-item *ngFor="let r of recipes" [routerLink]="['/recipe/' + r.id]">
-        <mat-icon matListIcon>image_search</mat-icon>
-        <h3 matLine> {{r.title}} </h3>
+      <mat-list-item *ngFor="let r of recipes">
+        <mat-icon class="clickable" matListIcon (click)="delete(r)">delete</mat-icon>
+        <h3 class="clickable" [routerLink]="['/recipe/' + r.id]" matLine> {{r.title}} </h3>
         <p matLine>
           <span> {{r.difficulty}} </span>
           <span class="demo-2"> -- {{r.preparationTime + r.cookingTime}}mn </span>

@@ -31,6 +31,10 @@ export class ApiService {
   postPhotos(recipeId: number, files: any): Observable<any> {
     const formData = new FormData();
     formData.append('photos', files)
-    return this.http.post(`${this.apiUrl}/${recipeId}/photos`, formData);
+    return this.http.post(`${this.apiUrl}/recipe/${recipeId}/photos`, formData);
+  }
+
+  deleteRecipe(recipeId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/recipe/${recipeId}`);
   }
 }
