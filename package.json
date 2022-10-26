@@ -1,10 +1,10 @@
 {
   "name": "cook-recipes-front",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production --base-href recettes/front/dist/cook-recipes-front/",
+    "build": "ng build --configuration production --base-href /recettes/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
