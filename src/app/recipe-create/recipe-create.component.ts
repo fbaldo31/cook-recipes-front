@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import {
   ITdDynamicElementConfig,
   TdDynamicElement,
   TdDynamicFormsComponent,
   TdDynamicType,
  } from '@covalent/dynamic-forms';
+
 import { ApiService } from '../services/api.service';
+import { IngredientAutocompleteComponent } from '../shared/comonents/ingredient-autocomplete/ingredient-autocomplete.component';
 import { UNITS } from '../shared/constants';
 
 @Component({
@@ -56,10 +59,22 @@ export class RecipeCreateComponent implements OnInit {
   ingredientToAdd = [
     {
       name: 'name',
+      type: IngredientAutocompleteComponent,
       label: 'Nom de l \'ingrédient',
-      type: TdDynamicElement.Input,
-      required: true,
       flex: 33,
+      validators: [
+        {
+          validator: (control: AbstractControl) => {
+            const isValid: boolean = control.value?.length;
+            return !isValid ? { required: true } : null;
+          },
+        },
+      ],
+      customConfig: {
+        // This is a property unique to the custom component
+        // and will be applied on instantiation of the component
+        placeholder: 'Nom de l \'ingrédient',
+      },
     },
     {
       name: 'quantity',
@@ -67,6 +82,14 @@ export class RecipeCreateComponent implements OnInit {
       type: TdDynamicType.Number,
       required: true,
       flex: 33,
+      validators: [
+        {
+          validator: (control: AbstractControl) => {
+            const isValid: boolean = control.value > 0;
+            return !isValid ? { positive: true } : null;
+          },
+        },
+      ],
     },
     {
       name: 'unit',

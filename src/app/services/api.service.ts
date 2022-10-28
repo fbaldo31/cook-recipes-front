@@ -12,6 +12,10 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  getIngredientNames(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/ingredient/name`);
+  }
+
   getRecipes(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/recipe`);
   }

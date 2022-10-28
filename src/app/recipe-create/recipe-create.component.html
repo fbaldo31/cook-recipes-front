@@ -30,9 +30,12 @@
               <span *ngIf="control.hasError('minlength')"
                 >Min length value: {{ element.minLength }}</span
               >
-              <span *ngIf="control.hasError('maxlength')"
-                >Max length value: {{ element.minLength }}</span
-              >
+              <span *ngIf="control.hasError('maxlength')">
+                Max length value: {{ element.minLength }}
+              </span>
+              <span *ngIf="control.hasError('positive')">
+                La quantité doit être supérieur à zéro
+              </span>
             </span>
           </ng-template>
         </ng-template>

@@ -1,29 +1,18 @@
 <mat-card>
     <mat-card-title>Choisi une recette</mat-card-title>
 
-    <table *ngIf="recipes.length" mat-table [dataSource]="recipes" class="mat-elevation-z8">
-      
-        <!-- Titre Column -->
-        <ng-container matColumnDef="title">
-          <th mat-header-cell *matHeaderCellDef> Titre </th>
-          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-    </table>
-    <div *ngIf="!recipes.length">Aucune recette trouvée !</div>
-
-
-    <mat-list *ngIf="recipes.length">
-      <mat-list-item *ngFor="let r of recipes">
-        <mat-icon class="clickable" matListIcon (click)="delete(r)">delete</mat-icon>
-        <h3 class="clickable" [routerLink]="['/recipe/' + r.id]" matLine> {{r.title}} </h3>
-        <p matLine>
-          <span> {{r.difficulty}} </span>
-          <span class="demo-2"> -- {{r.preparationTime + r.cookingTime}}mn </span>
-        </p>
-      </mat-list-item>
-    </mat-list>
+    <mat-card-content>
+      <div *ngIf="!recipes.length">Aucune recette trouvée !</div>
+  
+      <mat-list *ngIf="recipes.length">
+        <mat-list-item *ngFor="let r of recipes">
+          <mat-icon class="clickable" matListIcon (click)="delete(r)">delete</mat-icon>
+          <h3 class="clickable" [routerLink]="['/recipe/' + r.id]" matLine> {{r.title}} </h3>
+          <p matLine>
+            <span> {{r.difficulty}} </span>
+            <span class="demo-2"> -- {{r.preparationTime + r.cookingTime}}mn </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
 </mat-card>
