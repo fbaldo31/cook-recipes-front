@@ -57,15 +57,8 @@ export class RecipeCreateComponent implements OnInit {
   ingredients : any[] = [];
   ingredientData: ITdDynamicElementConfig[] = [];
   ingredientToAdd = [
-    // {
-    //   name: 'name',
-    //   label: 'Nom de l \'ingrédient',
-    //   type: TdDynamicElement.Input,
-    //   required: true,
-    //   flex: 33,
-    // },
     {
-      name: 'name2',
+      name: 'name',
       type: IngredientAutocompleteComponent,
       label: 'Nom de l \'ingrédient',
       flex: 33,
@@ -89,6 +82,14 @@ export class RecipeCreateComponent implements OnInit {
       type: TdDynamicType.Number,
       required: true,
       flex: 33,
+      validators: [
+        {
+          validator: (control: AbstractControl) => {
+            const isValid: boolean = control.value > 0;
+            return !isValid ? { positive: true } : null;
+          },
+        },
+      ],
     },
     {
       name: 'unit',

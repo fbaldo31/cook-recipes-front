@@ -14,10 +14,12 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { IngredientAutocompleteComponent } from './comonents/ingredient-autocomplete/ingredient-autocomplete.component';
+import { ApiService } from '../services/api.service';
 
 const MODULES = [
   CommonModule,
@@ -36,6 +38,8 @@ const MODULES = [
   MatDialogModule,
   MatSelectModule,
   MatAutocompleteModule,
+  MatInputModule,
+  MatFormFieldModule,
 ];
 
 const COMPONENTS: any[] = [
@@ -45,7 +49,7 @@ const COMPONENTS: any[] = [
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [
-    ...MODULES,
+    CommonModule,
   ],
   exports: [
     ...MODULES,
