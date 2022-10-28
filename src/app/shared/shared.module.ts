@@ -49,7 +49,7 @@ const COMPONENTS: any[] = [
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [
-    CommonModule,
+    ...MODULES,
   ],
   exports: [
     ...MODULES,
