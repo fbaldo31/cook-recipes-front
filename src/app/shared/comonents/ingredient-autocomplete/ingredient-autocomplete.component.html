@@ -1,0 +1,43 @@
+<div>
+  <div class="td-dynamic-input-wrapper">
+    <div
+      class="mat-form-field td-dynamic-input-field  mat-primary mat-form-field-type-mat-input mat-form-field-appearance-legacy mat-form-field-can-float mat-form-field-has-label mat-form-field-hide-placeholder ng-untouched ng-pristine ng-invalid ng-star-inserted">
+      <div class="mat-form-field-wrapper ">
+        <div class="mat-form-field-flex ">
+
+          <div class="mat-form-field-infix ">
+            
+            <label>Nom de l 'ingrédient</label>
+            <input class="mat-input-element mat-form-field-autofill-control"
+              type="text"
+              placeholder="Pick one"
+              aria-label="Number"
+              matInput
+              [(ngModel)]="control"
+              [matAutocomplete]="auto"
+              >
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="options">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+            
+                <!-- <mat-label _ngcontent="" class="">Nom de l 'ingrédient</mat-label> -->
+<!-- <span aria-hidden="true"
+                  class="mat-placeholder-required mat-form-field-required-marker  ng-star-inserted">
+                  *</span> -->
+
+
+           </div>
+
+        </div>
+        <div class="mat-form-field-underline"><span
+            class="mat-form-field-ripple "></span></div>
+
+        <div class="mat-form-field-subscript-wrapper " ng-reflect-ng-switch="hint">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
