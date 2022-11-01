@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { WINDOW } from '../shared/providers/window.provider';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject(WINDOW) private window: Window) { }
+
+  private apiUrl(): string {
+    return this.window.location.hostname + ':3000';
+  }
 
   getIngredientNames(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/ingredient/name`);

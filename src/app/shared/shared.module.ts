@@ -19,7 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { IngredientAutocompleteComponent } from './comonents/ingredient-autocomplete/ingredient-autocomplete.component';
-import { ApiService } from '../services/api.service';
+import { WINDOW_PROVIDERS } from './providers/window.provider';
 
 const MODULES = [
   CommonModule,
@@ -55,6 +55,7 @@ const COMPONENTS: any[] = [
     ...MODULES,
     ...COMPONENTS,
   ],
+  providers: [WINDOW_PROVIDERS],
   entryComponents: [...COMPONENTS],
 })
 export class SharedModule { }
