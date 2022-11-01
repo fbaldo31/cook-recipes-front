@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
@@ -11,12 +10,11 @@ import { environment } from '../../environments/environment';
 })
 export class ApiService {
 
-  constructor(private http: HttpClient, private location: Location) { }
+  constructor(private http: HttpClient) { }
 
   private apiUrl(): string {
     const url = new URL(environment.apiUrl);
     url.port = '3000';
-    // this.location.prepareExternalUrl('http://' + environment.apiUrl);
     console.log('url', url.toString());
     return url.toString();
   }
