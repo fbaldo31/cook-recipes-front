@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
     RecipeModule,
     RecipeCreateModule,
   ],
-  providers: [{provide: APP_BASE_HREF, useValue: environment.production ? '/recettes' : ''}],
+  providers: [{provide: APP_BASE_HREF, useValue: environment.production ? '/recettes/' : '/'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

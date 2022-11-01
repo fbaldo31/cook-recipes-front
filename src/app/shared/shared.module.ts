@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,7 +55,7 @@ const COMPONENTS: any[] = [
     ...MODULES,
     ...COMPONENTS,
   ],
-  providers: [WINDOW_PROVIDERS],
+  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   entryComponents: [...COMPONENTS],
 })
 export class SharedModule { }
