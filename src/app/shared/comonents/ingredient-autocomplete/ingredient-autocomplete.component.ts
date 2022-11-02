@@ -27,7 +27,7 @@ export class IngredientAutocompleteComponent implements OnInit {
       map(value => this._filter(value || '')),
     );
     this.subscriptions.push(
-      // this.api.getIngredientNames().subscribe(res => this.options = res),
+      this.api.getIngredientNames().subscribe(res => this.options = res),
     );
   }
 

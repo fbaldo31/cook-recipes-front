@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { finalize } from 'rxjs';
 
+import { Recipe, Step } from '../../shared/interfaces';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -19,7 +20,10 @@ export class DetailsComponent implements OnInit {
     this.route.params.subscribe((res: Params) => {
       this.api.getRecipe(res['id'])
         .pipe(finalize(() => this.loading = false))
-        .subscribe(recipe => this.recipe = recipe);
+        .subscribe((recipe: Recipe) => {
+          this.recipe = recipe;
+          this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
+        });
     })
   }
 

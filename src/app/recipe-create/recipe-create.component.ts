@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   ITdDynamicElementConfig,
   TdDynamicElement,
@@ -119,7 +120,7 @@ export class RecipeCreateComponent implements OnInit {
   ];
   photos: any;
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
     this.addIngredient();
@@ -190,7 +191,9 @@ export class RecipeCreateComponent implements OnInit {
       ingredients: this.ingredients,
       steps: this.steps,
     };
-    this.api.postRecipe(recipe).subscribe(res => console.log(res));
+    this.api.postRecipe(recipe).subscribe(async res => {
+      await this.router.navigate(['recipe', res.id]);
+    });
   }
 
 }

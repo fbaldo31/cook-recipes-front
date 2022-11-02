@@ -15,7 +15,6 @@ export class ApiService {
   private apiUrl(): string {
     const url = new URL(environment.apiUrl);
     url.port = '3000';
-    console.log('url', url.toString());
     return url.toString();
   }
 
