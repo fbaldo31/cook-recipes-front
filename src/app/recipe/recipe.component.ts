@@ -3,6 +3,7 @@ import { TdDialogService } from '@covalent/core/dialogs';
 import { Subscription } from 'rxjs';
 
 import { ApiService } from '../services/api.service';
+import { Recipe } from '../shared/interfaces';
 
 @Component({
   selector: 'app-recipe',

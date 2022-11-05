@@ -1,16 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ITdDynamicElementConfig,
   TdDynamicElement,
   TdDynamicFormsComponent,
   TdDynamicType,
  } from '@covalent/dynamic-forms';
+import { finalize } from 'rxjs';
 
 import { ApiService } from '../services/api.service';
 import { IngredientAutocompleteComponent } from '../shared/comonents/ingredient-autocomplete/ingredient-autocomplete.component';
 import { UNITS } from '../shared/constants';
+import { Recipe, Step } from '../shared/interfaces';
 
 @Component({
   selector: 'app-recipe-create',
@@ -119,12 +121,45 @@ export class RecipeCreateComponent implements OnInit {
     },
   ];
   photos: any;
+  recipe?: Recipe;
+  loading = false;
 
-  constructor(private api: ApiService, private router: Router) { }
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private route: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
     this.addIngredient();
     this.addStep();
+
+    this.route.params.subscribe((res: Params) => {
+      if (res['id']) {
+        this.api.getRecipe(res['id'])
+          .pipe(finalize(() => this.loading = false))
+          .subscribe((recipe: Recipe|Error) => {
+            if (recipe instanceof Error) {
+              console.error(recipe);
+            } else {
+              this.recipe = recipe;
+              this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
+              this.steps = [...this.recipe.steps];
+              this.ingredients = [
+                ...this.recipe.ingredients.map(e => {
+                  return {
+                    name: e.ingredient.name, quantity: e.quantity, unit: e.unit.label
+                  }
+                })
+              ];
+              this.recipeForm.controls['title'].setValue(recipe.title);
+              this.recipeForm.controls['difficulty'].setValue(recipe.difficulty);
+              this.recipeForm.controls['preparationTime'].setValue(recipe.preparationTime);
+              this.recipeForm.controls['cookingTime'].setValue(recipe.cookingTime);
+            }
+          });
+      }
+    })
   }
 
   addIngredient(): void {
@@ -143,6 +178,7 @@ export class RecipeCreateComponent implements OnInit {
     }
   }
 
+  /** @todo Call api to delete link */
   removeIngredient(name: string): void {
     this.ingredients.splice(this.ingredients.findIndex(e => e.name === name), 1);
   }

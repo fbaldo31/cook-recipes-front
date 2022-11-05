@@ -17,7 +17,7 @@ export interface Step {
 export interface IngredientQuantity {
     id: number;
     quantity: number;
-    ingredient: {id: number, name: string;}[];
+    ingredient: {id: number, name: string;};
     unit: Unit;
 }
 
