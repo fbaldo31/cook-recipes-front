@@ -6,7 +6,9 @@
   
       <mat-list *ngIf="recipes.length">
         <mat-list-item *ngFor="let r of recipes">
+          <mat-icon class="clickable" matListIcon [routerLink]="['create', r.id]">edit</mat-icon>
           <mat-icon class="clickable" matListIcon (click)="delete(r)">delete</mat-icon>
+
           <h3 class="clickable" [routerLink]="['/recipe/' + r.id]" matLine> {{r.title}} </h3>
           <p matLine>
             <span> {{r.difficulty}} </span>
