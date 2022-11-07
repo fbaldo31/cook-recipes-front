@@ -6,6 +6,7 @@ import { RecipeCreateModule } from './recipe-create/recipe-create.module';
 import { RecipeModule } from './recipe/recipe.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
+import { SearchModule } from './search/search.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { environment } from '../environments/environment';
     SharedModule,
     RecipeModule,
     RecipeCreateModule,
+    SearchModule,
   ],
   providers: [{provide: APP_BASE_HREF, useValue: environment.production ? '/recettes/' : '/'}],
   bootstrap: [AppComponent]

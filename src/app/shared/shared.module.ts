@@ -16,10 +16,11 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { AppRoutingModule } from '../app-routing.module';
 import { IngredientAutocompleteComponent } from './comonents/ingredient-autocomplete/ingredient-autocomplete.component';
-import { WINDOW_PROVIDERS } from './providers/window.provider';
+import { MarmitonTitlePipe } from './pipes/marmiton-title.pipe';
 
 const MODULES = [
   CommonModule,
@@ -40,20 +41,26 @@ const MODULES = [
   MatAutocompleteModule,
   MatInputModule,
   MatFormFieldModule,
+  MatExpansionModule,
 ];
 
 const COMPONENTS: any[] = [
   IngredientAutocompleteComponent,
 ];
 
+const PIPES = [
+  MarmitonTitlePipe,
+];
+
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ...PIPES],
   imports: [
     ...MODULES,
   ],
   exports: [
     ...MODULES,
     ...COMPONENTS,
+    ...PIPES
   ],
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   entryComponents: [...COMPONENTS],

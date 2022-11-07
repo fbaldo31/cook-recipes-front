@@ -26,3 +26,23 @@ export interface Unit {
     label: string;
     slug: string;
 }
+
+export interface IngredientsQuantityDto {
+    name: string;
+    quantity: number;
+    unit: string;
+  }
+
+export interface RecipeDto
+  extends Omit<
+    Recipe,
+    | 'ingredients'
+    | 'steps'
+    | 'id'
+    | 'createdDate'
+    | 'updatedDate'
+    | 'deletedDate'
+  > {
+  ingredients: IngredientsQuantityDto[];
+  steps: Partial<Step>[];
+}
