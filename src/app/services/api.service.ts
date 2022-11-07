@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
@@ -30,6 +30,17 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl()}recipe/${id}`);
   }
 
+  getMarmitonUrls(title: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl()}recipe/marmiton/urls/${title}`);
+  }
+
+  getMarmitonRecipe(title: string, url: string): Observable<string[]> {
+    let params = new HttpParams();
+    params = params.append('title', title);
+    params = params.append('url',url);
+    return this.http.get<string[]>(`${this.apiUrl()}recipe/marmiton`, {params});
+  }
+
   postRecipe(recipe: any, files?: any): Observable<any> {
     let action = this.http.post(`${this.apiUrl()}recipe`, recipe);
     if (files) {
@@ -47,4 +58,6 @@ export class ApiService {
   deleteRecipe(recipeId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl()}recipe/${recipeId}`);
   }
+
+
 }

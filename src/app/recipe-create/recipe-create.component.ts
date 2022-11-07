@@ -12,7 +12,7 @@ import { finalize } from 'rxjs';
 import { ApiService } from '../services/api.service';
 import { IngredientAutocompleteComponent } from '../shared/comonents/ingredient-autocomplete/ingredient-autocomplete.component';
 import { UNITS } from '../shared/constants';
-import { Recipe, Step } from '../shared/interfaces';
+import { IngredientQuantity, IngredientsQuantityDto, Recipe, RecipeDto, Step } from '../shared/interfaces';
 
 @Component({
   selector: 'app-recipe-create',
@@ -52,7 +52,7 @@ export class RecipeCreateComponent implements OnInit {
       name: 'cookingTime',
       label: 'Temps de cuisson',
       type: TdDynamicType.Number,
-      min: 1,
+      min: 0,
       max: 2000,
       flex: 50,
     },
@@ -128,7 +128,7 @@ export class RecipeCreateComponent implements OnInit {
     private api: ApiService,
     private router: Router,
     private route: ActivatedRoute,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.addIngredient();
@@ -136,30 +136,55 @@ export class RecipeCreateComponent implements OnInit {
 
     this.route.params.subscribe((res: Params) => {
       if (res['id']) {
-        this.api.getRecipe(res['id'])
-          .pipe(finalize(() => this.loading = false))
-          .subscribe((recipe: Recipe|Error) => {
-            if (recipe instanceof Error) {
-              console.error(recipe);
-            } else {
-              this.recipe = recipe;
-              this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
-              this.steps = [...this.recipe.steps];
-              this.ingredients = [
-                ...this.recipe.ingredients.map(e => {
-                  return {
-                    name: e.ingredient.name, quantity: e.quantity, unit: e.unit.label
-                  }
-                })
-              ];
-              this.recipeForm.controls['title'].setValue(recipe.title);
-              this.recipeForm.controls['difficulty'].setValue(recipe.difficulty);
-              this.recipeForm.controls['preparationTime'].setValue(recipe.preparationTime);
-              this.recipeForm.controls['cookingTime'].setValue(recipe.cookingTime);
-            }
-          });
+        if (+res['id'] === 0) {
+          // This is a Marmiton recipe
+          this.setupForm(JSON.parse(res['recipe']));
+        } else {
+          // Edition mode
+          this.api.getRecipe(res['id'])
+            .pipe(finalize(() => this.loading = false))
+            .subscribe((recipe: Recipe|Error) => {
+              if (recipe instanceof Error) {
+                console.error(recipe);
+              } else {
+                this.setupForm(recipe);
+              }
+            });
+        }
       }
     })
+  }
+
+  setupForm(recipe: Recipe) {
+    console.log(recipe.difficulty);
+    
+    this.recipe = recipe;
+    this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
+    this.steps = [...this.recipe.steps];
+    
+    setTimeout(() => {
+      this.recipeForm.controls['title'].setValue(recipe.title);
+      this.recipeForm.controls['difficulty'].setValue(recipe.difficulty);
+      this.recipeForm.controls['preparationTime'].setValue(recipe.preparationTime);
+      this.recipeForm.controls['cookingTime'].setValue(recipe.cookingTime);
+      this.ingredients = [
+        ...recipe.ingredients.map((e: IngredientQuantity | IngredientsQuantityDto) => {
+          if ((e as IngredientQuantity).ingredient) {
+            return {
+              name: (<IngredientQuantity>e).ingredient.name,
+              quantity: e.quantity,
+              unit: (<IngredientQuantity>e).unit.label
+            }
+          } else {
+            return {
+              name: (<IngredientsQuantityDto>e).name,
+              quantity: e.quantity,
+              unit: (<IngredientsQuantityDto>e).unit
+            }
+          }
+        })
+      ];
+    }, 200)
   }
 
   addIngredient(): void {

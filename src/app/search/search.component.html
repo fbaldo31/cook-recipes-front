@@ -1,0 +1,42 @@
+<section class="">
+
+</section>
+<mat-card>
+    <mat-card-header>
+        <div layout-gt-xs="row">
+            <div flex-gt-xs="40">
+                <td-search-input
+                appearance="outline"
+                placeholder="Rechercher"
+                (search)="search($event)"
+                (clear)="clear()"
+                ></td-search-input>
+            </div>
+        </div>
+    </mat-card-header>
+    <mat-card-content>
+        <p>Search Value: {{ searchInputTerm || 'Empty' }}</p>
+
+        <mat-accordion *ngIf="urls.length">
+            <mat-expansion-panel *ngFor="let url of urls" (opened)="getRecipe(url)">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>{{url | marmitonTitle}}</mat-panel-title>
+                    <!-- <mat-panel-description>
+                    This is a summary of the content
+                    </mat-panel-description> -->
+                </mat-expansion-panel-header>
+                <p>
+                    <a mat-icon-button [href]="url" target="_blank" icon="open_in_new">
+                        <mat-icon>open_in_new</mat-icon>
+                    </a>
+                    Consulter sur Marmiton
+                </p>
+                <p *ngIf="recipe">{{recipe.steps.length}} étapes</p>
+                <p *ngIf="recipe">{{recipe |json}}</p>
+                <mat-action-row *ngIf="recipe">
+                    <button mat-flat-button color="primary" [routerLink]="['..', 'create', 0, recipe |json]">Utiliser cette recette</button>
+                </mat-action-row>
+            </mat-expansion-panel>
+            </mat-accordion>
+    </mat-card-content>
+</mat-card>
