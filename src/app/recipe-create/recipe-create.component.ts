@@ -57,7 +57,7 @@ export class RecipeCreateComponent implements OnInit {
       flex: 50,
     },
   ];
-  ingredients : any[] = [];
+  ingredients : IngredientsQuantityDto[] = [];
   ingredientData: ITdDynamicElementConfig[] = [];
   ingredientToAdd = [
     {
@@ -103,7 +103,7 @@ export class RecipeCreateComponent implements OnInit {
       flex: 33,
     },
   ];
-  steps : any[] = [];
+  steps : Step[] = [];
   stepData: ITdDynamicElementConfig[] = [];
   stepToAdd = [
     {
@@ -156,8 +156,6 @@ export class RecipeCreateComponent implements OnInit {
   }
 
   setupForm(recipe: Recipe) {
-    console.log(recipe.difficulty);
-    
     this.recipe = recipe;
     this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
     this.steps = [...this.recipe.steps];
@@ -171,6 +169,7 @@ export class RecipeCreateComponent implements OnInit {
         ...recipe.ingredients.map((e: IngredientQuantity | IngredientsQuantityDto) => {
           if ((e as IngredientQuantity).ingredient) {
             return {
+              id: (<IngredientQuantity>e).id,
               name: (<IngredientQuantity>e).ingredient.name,
               quantity: e.quantity,
               unit: (<IngredientQuantity>e).unit.label
@@ -203,9 +202,11 @@ export class RecipeCreateComponent implements OnInit {
     }
   }
 
-  /** @todo Call api to delete link */
-  removeIngredient(name: string): void {
-    this.ingredients.splice(this.ingredients.findIndex(e => e.name === name), 1);
+  removeIngredient(ingredient: IngredientsQuantityDto & {id?: number}): void {
+    if (ingredient.id) {
+      this.api.removeIngredient(ingredient.id).subscribe();
+    }
+    this.ingredients.splice(this.ingredients.findIndex(e => e.name === ingredient.name), 1);
   }
 
   addStep(): void {
@@ -225,16 +226,18 @@ export class RecipeCreateComponent implements OnInit {
     }
   }
 
-  removeStep(position: number): void {
-    this.steps.splice(this.steps.findIndex(e => e.position === position), 1);
+  removeStep(step: Partial<Step>): void {
+    if (step.id) {
+      this.api.removeStep(step.id).subscribe();
+    }
+    this.steps.splice(this.steps.findIndex(e => e.position === step.position), 1);
   }
 
   isFormValid(): boolean {
     return this.recipeForm.valid && !!this.ingredients.length && !!this.steps.length;
   }
 
-  fileSelect(files: any) {
-    console.log(files);
+  fileSelect(files: any): void {
     if (files instanceof FileList) {
       this.photos = files
     } else {
@@ -242,7 +245,7 @@ export class RecipeCreateComponent implements OnInit {
     }
   }
 
-  removePhoto(name: string) {
+  removePhoto(name: string): void {
     this.photos.splice(this.photos.findIndex((e: File) => e.name === name), 1);
   }
 

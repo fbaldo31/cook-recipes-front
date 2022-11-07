@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { IngredientQuantity, Recipe, Step } from '../shared/interfaces';
 
 
 @Injectable({
@@ -22,8 +23,8 @@ export class ApiService {
     return this.http.get<string[]>(`${this.apiUrl()}ingredient/name`);
   }
 
-  getRecipes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl()}recipe`);
+  getRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.apiUrl()}recipe`);
   }
 
   getRecipe(id: number): Observable<any> {
@@ -41,10 +42,10 @@ export class ApiService {
     return this.http.get<string[]>(`${this.apiUrl()}recipe/marmiton`, {params});
   }
 
-  postRecipe(recipe: any, files?: any): Observable<any> {
-    let action = this.http.post(`${this.apiUrl()}recipe`, recipe);
+  postRecipe(recipe: any, files?: any): Observable<Recipe> {
+    let action = this.http.post<Recipe>(`${this.apiUrl()}recipe`, recipe);
     if (files) {
-      return action.pipe(map((res: any) => this.postPhotos(res.id, files)))
+      return action.pipe<any>(map((res: any) => this.postPhotos(res.id, files)))
     }
     return action; 
   }
@@ -55,9 +56,16 @@ export class ApiService {
     return this.http.post(`${this.apiUrl()}recipe/${recipeId}/photos`, formData);
   }
 
-  deleteRecipe(recipeId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl()}recipe/${recipeId}`);
+  deleteRecipe(recipeId: number): Observable<Recipe> {
+    return this.http.delete<Recipe>(`${this.apiUrl()}recipe/${recipeId}`);
   }
 
+  removeIngredient(id: number): Observable<IngredientQuantity> {
+    return this.http.delete<IngredientQuantity>(`${this.apiUrl()}recipe/ingredient/${id}`);
+  }
+
+  removeStep(id: number): Observable<Step> {
+    return this.http.delete<Step>(`${this.apiUrl()}recipe/step/${id}`);
+  }
 
 }

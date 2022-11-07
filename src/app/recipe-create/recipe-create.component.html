@@ -85,15 +85,15 @@
     <mat-card-subtitle>Ingrédients</mat-card-subtitle>
     <mat-list>
       <mat-list-item *ngFor="let i of ingredients">
-        <mat-icon (click)="removeIngredient(i.name)" matListIcon>delete</mat-icon>
-        <p matLine>{{i.quantity}} {{i.unit}} de {{i.name}} </p>
+        <mat-icon (click)="removeIngredient(i)" matListIcon>delete</mat-icon>
+        <p matLine>{{i | ingredient}} </p>
       </mat-list-item>
     </mat-list>
 
     <mat-card-subtitle>Etapes</mat-card-subtitle>
     <mat-list>
       <mat-list-item *ngFor="let s of steps">
-        <mat-icon (click)="removeStep(s.position)" matListIcon>delete</mat-icon>
+        <mat-icon (click)="removeStep(s)" matListIcon>delete</mat-icon>
         <h3 matLine> {{s.position}} {{s.text}} </h3>
       </mat-list-item>
     </mat-list>
