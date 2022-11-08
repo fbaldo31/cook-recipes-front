@@ -21,6 +21,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AppRoutingModule } from '../app-routing.module';
 import { IngredientAutocompleteComponent } from './comonents/ingredient-autocomplete/ingredient-autocomplete.component';
 import { MarmitonTitlePipe } from './pipes/marmiton-title.pipe';
+import { IngredientPipe } from './pipes/ingredient.pipe';
 
 const MODULES = [
   CommonModule,
@@ -50,10 +51,11 @@ const COMPONENTS: any[] = [
 
 const PIPES = [
   MarmitonTitlePipe,
+  IngredientPipe,
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS, ...PIPES,],
   imports: [
     ...MODULES,
   ],

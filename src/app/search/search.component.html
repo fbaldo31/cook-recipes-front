@@ -31,8 +31,8 @@
                     </a>
                     Consulter sur Marmiton
                 </p>
-                <p *ngIf="recipe">{{recipe.steps.length}} étapes</p>
-                <p *ngIf="recipe">{{recipe |json}}</p>
+                <p *ngIf="recipe">{{recipe.ingredients.length}} ingredients - {{recipe.steps.length}} étapes</p>
+                <!-- <p *ngIf="recipe">{{recipe |json}}</p> -->
                 <mat-action-row *ngIf="recipe">
                     <button mat-flat-button color="primary" [routerLink]="['..', 'create', 0, recipe |json]">Utiliser cette recette</button>
                 </mat-action-row>
