@@ -9,7 +9,7 @@
             <mat-card-subtitle>Ingrédients</mat-card-subtitle>
             <mat-list>
                 <mat-list-item *ngFor="let i of recipe.ingredients">
-                    {{i.quantity}} {{i.unit.label}} {{i.ingredient.name}}
+                    {{ formatIngredient(i) | ingredient }}
                 </mat-list-item>
             </mat-list>
 

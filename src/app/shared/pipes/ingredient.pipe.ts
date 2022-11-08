@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { UNITS } from '../constants';
 
 import { IngredientsQuantityDto } from '../interfaces';
 
@@ -8,14 +9,11 @@ import { IngredientsQuantityDto } from '../interfaces';
 export class IngredientPipe implements PipeTransform {
 
   transform(value: IngredientsQuantityDto, ...args: unknown[]): unknown {
-    let ingredientName = (value.name.startsWith('d\'') || value.name.startsWith('de') || value.unit === '')
+    let ingredientName = (value.name.startsWith('d\'') || value.name.startsWith('de') || !value.unit || value.unit === 'pièce')
       ? value.name 
       : ('de ' + value.name);
-    // if (value.quantity > 1 && value.unit === '' && !ingredientName.endsWith('s') && !ingredientName.endsWith('x')) {
-    //   ingredientName = ingredientName + 's';
-    //   /** @todo manage also 'x' */
-    // }
-    return `${value.quantity || ''} ${value.unit} ${ingredientName}`;
+    let unit = value.unit === 'pièce' ? '' : value.unit;
+    return `${value.quantity || ''} ${unit || ''} ${ingredientName}`;
   }
 
 }

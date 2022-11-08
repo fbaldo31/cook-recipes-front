@@ -10,4 +10,9 @@ export const UNITS = {
     'c a c': 'cuillère à café',
     't': 'tasse',
     '': 'pièce',
+    pot: 'pot',
+    sachet: 'sachet',
+    gousse: 'gousse',
+    tete: 'tête',
+    zeste: 'zeste',
 };

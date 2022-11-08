@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { finalize } from 'rxjs';
 
-import { Recipe, Step } from '../../shared/interfaces';
+import { IngredientQuantity, IngredientsQuantityDto, Recipe, Step } from '../../shared/interfaces';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -24,7 +24,15 @@ export class DetailsComponent implements OnInit {
           this.recipe = recipe;
           this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
         });
-    })
+    });
+  }
+
+  formatIngredient(i: IngredientQuantity): IngredientsQuantityDto {
+    return {
+      name: i.ingredient.name,
+      quantity: i.quantity,
+      unit: i.unit?.label,
+    }
   }
 
 }

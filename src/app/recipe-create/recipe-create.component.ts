@@ -155,6 +155,7 @@ export class RecipeCreateComponent implements OnInit {
     })
   }
 
+  /** Used for edition or for creation via marmiton */
   setupForm(recipe: Recipe) {
     this.recipe = recipe;
     this.recipe.steps.sort((a: Step, b: Step) => a.position - b.position);
@@ -256,6 +257,10 @@ export class RecipeCreateComponent implements OnInit {
       steps: this.steps,
     };
     this.api.postRecipe(recipe).subscribe(async res => {
+      if (res instanceof Error) {
+        console.error(res.message);
+        return;
+      }
       await this.router.navigate(['recipe', res.id]);
     });
   }
