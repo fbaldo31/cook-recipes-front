@@ -56,6 +56,15 @@ export class RecipeCreateComponent implements OnInit {
       max: 2000,
       flex: 50,
     },
+    {
+      name: 'portions',
+      label: 'Nombre de parts',
+      type: TdDynamicType.Number,
+      min: 1,
+      max: 100,
+      flex: 50,
+      default: 4,
+    },
   ];
   ingredients : IngredientsQuantityDto[] = [];
   ingredientData: ITdDynamicElementConfig[] = [];

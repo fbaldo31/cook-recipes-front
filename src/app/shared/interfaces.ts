@@ -4,6 +4,7 @@ export interface Recipe {
     preparationTime: number;
     cookingTime: number;
     difficulty: string;
+    portions: number;
     ingredients: IngredientQuantity[];
     steps: Step[];
 }
